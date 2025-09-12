@@ -1,0 +1,15 @@
+.app {
+  height: 100vh;
+  padding: 32px 40px 24px 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.page {
+  background-color: #f3f3f3;
+}
+.page__content {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0px 20px;
+}

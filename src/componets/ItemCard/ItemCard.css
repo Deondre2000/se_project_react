@@ -1,0 +1,56 @@
+.cards {
+  margin-top: 40px;
+}
+
+.cards__list {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  gap: 20px;
+}
+
+.card__image {
+  width: 100%;
+  top: 279px;
+  left: 40px;
+  opacity: 1;
+  border: solid rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+}
+
+.card__image:hover {
+  cursor: pointer;
+}
+
+.card {
+  width: 323px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.card__name {
+  position: absolute;
+  top: 15px;
+  margin: 0px;
+  color: rgba(0, 0, 0, 0.6);
+  font-family: Cabinet Grotesk;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0px;
+  width: 49px;
+  height: 20px;
+}
+
+.cards__text {
+  font-family: Cabinet Grotesk;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0px;
+  margin: 0 0 34px;
+}
