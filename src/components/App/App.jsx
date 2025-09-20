@@ -39,7 +39,9 @@ function App() {
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Failed to fetch weather data:", error);
+      });
   }, []);
 
   return (
@@ -55,7 +57,7 @@ function App() {
       <ModalWithForm
         title="New Garment"
         buttonText="Add Garment"
-        activeModal={activeModal}
+        isOpened={activeModal === "add-garment"}
         onClose={closeActiveModal}
       >
         {" "}
@@ -80,19 +82,37 @@ function App() {
         <fieldset className="modal__radio-buttons">
           <legend className="modal__legend">Select the Weather Type:</legend>
           <label htmlFor="hot" className="modal__label modal__label_type_radio">
-            <input value="hot" type="radio" className="modal__radio-input" /> Hot
+            <input
+              value="hot"
+              type="radio"
+              className="modal__radio-input"
+              name="weather"
+            />{" "}
+            Hot
           </label>
           <label
             htmlFor="warm"
             className="modal__label modal__label_type_radio"
           >
-            <input value="warm" type="radio" className="modal__radio-input" /> Warm
+            <input
+              value="warm"
+              type="radio"
+              className="modal__radio-input"
+              name="weather"
+            />{" "}
+            Warm
           </label>
           <label
             htmlFor="cold"
             className="modal__label modal__label_type_radio"
           >
-            <input value="cold" type="radio" className="modal__radio-input" /> Cold
+            <input
+              value="cold"
+              type="radio"
+              className="modal__radio-input"
+              name="weather"
+            />{" "}
+            Cold
           </label>
         </fieldset>{" "}
       </ModalWithForm>
