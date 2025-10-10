@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -9,6 +10,7 @@ import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { coordinates, apiKey } from "../../utils/constants";
 import { defaultClothingItems } from "../../utils/constants";
 import currentTemperatureUnitContext from "../../contexts/CurrentTemperatureContext";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   const [clothingItems, setClothingItems] = useState(defaultClothingItems);
@@ -38,8 +40,13 @@ function App() {
     setActiveModal("add-garment");
   };
 
-  const onAddItem = (data) => {
-    console.log(data);
+  const onAddItem = (inputValues) => {
+    const newCardData = {
+      name: inputValues.name,
+      link: inputValues.link,
+      weather: inputValues.weatherType,
+    };
+    setClothingItems([...clothingItems, newCardData]);
   };
 
   const closeActiveModal = () => {
@@ -58,31 +65,46 @@ function App() {
   }, []);
 
   return (
-    <currentTemperatureUnitContext.Provider
-      value={{ currentTemperatureUnit, handleToggleSwitchChange }}
-    >
-      <div className="app">
-        <div className="page__content">
-          <Header handleAddClick={handleAddClick} weatherData={weatherData} />
-          <Main
-            weatherData={weatherData}
-            handleCardClick={handleCardClick}
-            clothingItems={clothingItems}
+    <BrowserRouter>
+      <currentTemperatureUnitContext.Provider
+        value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+      >
+        <div className="app">
+          <div className="page__content">
+            <Header handleAddClick={handleAddClick} weatherData={weatherData} />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Main
+                    weatherData={weatherData}
+                    handleCardClick={handleCardClick}
+                    clothingItems={clothingItems}
+                  />
+                }
+              />
+               <Route
+                path="/profile"
+                element={
+                 <p>PROFILE</p>
+                }
+              />
+            </Routes>
+          </div>
+          <AddItemModal
+            isOpened={activeModal === "add-garment"}
+            onClose={closeActiveModal}
+            onAddItem={onAddItem}
           />
+          <ItemModal
+            activeModal={activeModal}
+            card={selectedCard}
+            onClose={closeActiveModal}
+          />
+          <Footer />
         </div>
-        <AddItemModal
-          isOpened={activeModal === "add-garment"}
-          onClose={closeActiveModal}
-          onAddItem={onAddItem}
-        />
-        <ItemModal
-          activeModal={activeModal}
-          card={selectedCard}
-          onClose={closeActiveModal}
-        />
-        <Footer />
-      </div>
-    </currentTemperatureUnitContext.Provider>
+      </currentTemperatureUnitContext.Provider>
+    </BrowserRouter>
   );
 }
 

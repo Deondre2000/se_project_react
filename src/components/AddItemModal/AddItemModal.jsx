@@ -30,6 +30,7 @@ const AddItemModal = ({ isOpened, onAddItem, onClose }) => {
           type="text"
           className="modal__input"
           id="name"
+          name="name"
           placeholder="Name"
           value={values.name}
           onChange={handleChange}
@@ -42,7 +43,8 @@ const AddItemModal = ({ isOpened, onAddItem, onClose }) => {
           className="modal__input"
           id="imageUrl"
           placeholder="Image URL"
-          value={values.URL}
+          name="link"
+          value={values.link}
           onChange={handleChange}
         />
       </label>
@@ -53,7 +55,7 @@ const AddItemModal = ({ isOpened, onAddItem, onClose }) => {
             value="hot"
             type="radio"
             className="modal__radio-input"
-            name="weather"
+            name="weatherType"
             onChange={handleChange}
           />{" "}
           Hot
@@ -63,7 +65,7 @@ const AddItemModal = ({ isOpened, onAddItem, onClose }) => {
             value="warm"
             type="radio"
             className="modal__radio-input"
-            name="weather"
+            name="weatherType"
             onChange={handleChange}
           />{" "}
           Warm
@@ -73,7 +75,7 @@ const AddItemModal = ({ isOpened, onAddItem, onClose }) => {
             value="cold"
             type="radio"
             className="modal__radio-input"
-            name="weather"
+            name="weatherType"
             onChange={handleChange}
           />{" "}
           Cold
