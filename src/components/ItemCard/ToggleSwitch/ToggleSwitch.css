@@ -19,9 +19,8 @@
 }
 
 .toggle-switch__checkbox:checked ~ .toggle-switch__circle {
-  left: 22px;
+  left: 27px;
   right: 0;
-  
 }
 
 .toggle-switch__circle {
@@ -47,10 +46,8 @@
 .toggle-switch__text_C {
   right: 9px;
   color: rgba(0, 0, 0, 0.5);
-  
 }
 
 .toggle-switch__text_color_white {
   color: white;
-  
 }
