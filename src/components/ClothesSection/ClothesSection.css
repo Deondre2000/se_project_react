@@ -1,0 +1,41 @@
+.clothes-section__row {
+  display: flex;
+}
+
+.Clothes-section__list {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  gap: 20px;
+}
+
+.clothes-add__button {
+  font-family: Cabinet Grotesk;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 20px;
+  border: none;
+  background: none;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.clothes__text {
+  font-family: Cabinet Grotesk;
+  font-weight: 700;
+  font-size: 20px;
+  margin-right: 16px;
+  margin-bottom: 16px;
+}
+
+.sidebar {
+  margin-right: 116px;
+}
+
+.sidebar__user-name {
+  width: 157px;
+  height: 25px;
+  opacity: 1;
+}

@@ -6,11 +6,13 @@ import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import ItemModal from "../ItemModal/ItemModal";
+import Profile from "../Profile/Profile";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { coordinates, apiKey } from "../../utils/constants";
 import { defaultClothingItems } from "../../utils/constants";
 import currentTemperatureUnitContext from "../../contexts/CurrentTemperatureContext";
 import { BrowserRouter } from "react-router-dom";
+import { getItems } from "../../../api.js";
 
 function App() {
   const [clothingItems, setClothingItems] = useState(defaultClothingItems);
@@ -62,6 +64,12 @@ function App() {
       .catch((error) => {
         console.error("Failed to fetch weather data:", error);
       });
+    getItems()
+      .then((data) => {
+        console.log("Fetched items:", data);
+        setClothingItems(data);
+      })
+      .catch(console.error);
   }, []);
 
   return (
@@ -83,10 +91,13 @@ function App() {
                   />
                 }
               />
-               <Route
+              <Route
                 path="/profile"
                 element={
-                 <p>PROFILE</p>
+                  <Profile
+                    onCardClick={handleCardClick}
+                    clothingItems={clothingItems}
+                  />
                 }
               />
             </Routes>
