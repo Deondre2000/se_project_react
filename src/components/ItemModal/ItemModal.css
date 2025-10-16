@@ -34,3 +34,20 @@
   letter-spacing: 0px;
   margin: 0px;
 }
+
+.modal__delete {
+  margin-top: 24.6px;
+  position: relative;
+  left: 343px;
+  bottom: 84px;
+  background: none;
+  color: rgba(255, 77, 0, 1);
+  border: none;
+  width: 98px;
+  height: 14px;
+  opacity: 1;
+}
+
+.modal__delete:hover {
+  cursor: pointer;
+}

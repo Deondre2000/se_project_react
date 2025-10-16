@@ -9,13 +9,14 @@ import ItemModal from "../ItemModal/ItemModal";
 import Profile from "../Profile/Profile";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { coordinates, apiKey } from "../../utils/constants";
-import { defaultClothingItems } from "../../utils/constants";
 import currentTemperatureUnitContext from "../../contexts/CurrentTemperatureContext";
 import { BrowserRouter } from "react-router-dom";
 import { getItems } from "../../../api.js";
+import { addItemInfo } from "../../../api.js";
+import { deleteItem } from "../../../api.js";
 
 function App() {
-  const [clothingItems, setClothingItems] = useState(defaultClothingItems);
+  const [clothingItems, setClothingItems] = useState([]);
 
   const [weatherData, setWeatherData] = useState({
     type: "",
@@ -45,15 +46,39 @@ function App() {
   const onAddItem = (inputValues) => {
     const newCardData = {
       name: inputValues.name,
-      link: inputValues.link,
+      imageUrl: inputValues.imageUrl,
       weather: inputValues.weatherType,
     };
-    setClothingItems([...clothingItems, newCardData]);
+    addItemInfo(newCardData)
+      .then((data) => {
+        setClothingItems([data, ...clothingItems]);
+      })
+      .catch(console.error);
   };
 
   const closeActiveModal = () => {
     setActiveModal("");
   };
+
+// add a delete button to the preview modal
+//declare a handler in App.jsx (deleteItemHandler)
+//pass handler to preview modal
+//inside preview modal, pass the ID as an argument to the handler fuse the handelr pattern found in itemCard
+//inside the handler
+//call removeitem function pass it the Id
+// -in .then() remove the item form the array
+// how? filter it
+
+
+  const deleteItem = () => {
+    deleteItem(newCardData);
+  };
+
+  function deleteItem(cardElement, cardId) {
+    openModal(deleteModal);
+    selectedCard = cardElement;
+    selectedCard = cardId;
+  }
 
   useEffect(() => {
     getWeather(coordinates, apiKey)
@@ -66,8 +91,7 @@ function App() {
       });
     getItems()
       .then((data) => {
-        console.log("Fetched items:", data);
-        setClothingItems(data);
+        setClothingItems(data, clothingItems);
       })
       .catch(console.error);
   }, []);
