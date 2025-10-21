@@ -60,25 +60,17 @@ function App() {
     setActiveModal("");
   };
 
-// add a delete button to the preview modal
-//declare a handler in App.jsx (deleteItemHandler)
-//pass handler to preview modal
-//inside preview modal, pass the ID as an argument to the handler fuse the handelr pattern found in itemCard
-//inside the handler
-//call removeitem function pass it the Id
-// -in .then() remove the item form the array
-// how? filter it
 
-
-  const deleteItem = () => {
-    deleteItem(newCardData);
+  const handleDeleteItem = (id) => {
+    deleteItem(id)
+    .then(() => {
+      setClothingItems((prevItems) =>
+        prevItems.filter((items) => items._id !== id)
+    );
+        closeActiveModal();
+      })
+      .catch((error) => console.error("Failed to delete item:", error));
   };
-
-  function deleteItem(cardElement, cardId) {
-    openModal(deleteModal);
-    selectedCard = cardElement;
-    selectedCard = cardId;
-  }
 
   useEffect(() => {
     getWeather(coordinates, apiKey)
@@ -135,7 +127,10 @@ function App() {
             activeModal={activeModal}
             card={selectedCard}
             onClose={closeActiveModal}
+            onDelete={handleDeleteItem}
+          
           />
+
           <Footer />
         </div>
       </currentTemperatureUnitContext.Provider>
