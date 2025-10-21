@@ -60,13 +60,16 @@ function App() {
     setActiveModal("");
   };
 
+  const handleDeleteConf = () => {
+    setActiveModal("Delete");
+  };
 
   const handleDeleteItem = (id) => {
     deleteItem(id)
-    .then(() => {
-      setClothingItems((prevItems) =>
-        prevItems.filter((items) => items._id !== id)
-    );
+      .then(() => {
+        setClothingItems((prevItems) =>
+          prevItems.filter((items) => items._id !== id)
+        );
         closeActiveModal();
       })
       .catch((error) => console.error("Failed to delete item:", error));
@@ -127,8 +130,8 @@ function App() {
             activeModal={activeModal}
             card={selectedCard}
             onClose={closeActiveModal}
+            deleteConf={handleDeleteConf}
             onDelete={handleDeleteItem}
-          
           />
 
           <Footer />

@@ -1,4 +1,4 @@
-import "../Sidebar/sidebar.css";
+import "../Sidebar/Sidebar.css";
 import avatarDefault from "../../assets/avatar.svg";
 
 export default function SideBar() {

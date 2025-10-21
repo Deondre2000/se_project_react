@@ -2,28 +2,56 @@ import "./ItemModal.css";
 import close from "../../assets/close.png";
 import whtclose from "../../assets/white-close.png";
 
-function ItemModal({ activeModal, onClose, card, onDelete }) {
+function ItemModal({ activeModal, onClose, card, onDelete, deleteConf }) {
   return (
     <div
-      className={`modal ${activeModal === "preview" ? "modal__opened" : ""}`}
+      className={`modal ${
+        activeModal === "preview" || activeModal === "Delete"
+          ? "modal__opened"
+          : ""
+      }`}
     >
-      <div className="modal__content modal__content_type_image">
-        <button onClick={onClose} type="button" className="modal__close">
-          <img src={close} alt="Close" />
-        </button>
-        <img src={card.imageUrl} alt={card.name} className="modal__image" />
-        <div className="modal__footer">
-          <h2 className="modal__caption">{card.name}</h2>
-          <p className="modal__weather">Weather: {card.weather}</p>
+      {activeModal === "preview" && (
+        <div className="modal__content modal__content_type_image">
+          <button onClick={onClose} type="button" className="modal__close">
+            <img src={close} alt="Close" />
+          </button>
+          <img src={card.imageUrl} alt={card.name} className="modal__image" />
+          <div className="modal__footer">
+            <h2 className="modal__caption">{card.name}</h2>
+            <p className="modal__weather">Weather: {card.weather}</p>
+            <button
+              onClick={() => deleteConf(card._id)}
+              type="button"
+              className="modal__delete"
+            >
+              delete item
+            </button>
+          </div>
+        </div>
+      )}
+      {activeModal === "Delete" && (
+        <div className="modal__delete-preview">
+          <p className="modal__delete-text">
+            Are you sure you want to delete this item? This action is
+            irreversible.
+          </p>
           <button
+            className="modal__delete-btn"
             onClick={() => onDelete(card._id)}
             type="button"
-            className="modal__delete"
           >
-            delete item
+            Yes, delete item
+          </button>
+          <button
+            className="modal__cancel-btn"
+            onClick={() => onClose()}
+            type="button"
+          >
+            Cancel
           </button>
         </div>
-      </div>
+      )}
     </div>
   );
 }
