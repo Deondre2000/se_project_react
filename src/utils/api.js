@@ -2,14 +2,14 @@ const baseUrl = "http://localhost:3001";
 
 const headers = { "Content-Type": "application/json" };
 
-const handleServerResponse = (res) => {
+export const handleServerResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
 };
 
 export const getItems = () =>
   fetch(`${baseUrl}/items`, { headers }).then(handleServerResponse);
 
-export  function deleteItem(id) {
+export function deleteItem(id) {
   return fetch(`${baseUrl}/items/${id}`, {
     method: "DELETE",
     headers,

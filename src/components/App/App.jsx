@@ -9,11 +9,11 @@ import ItemModal from "../ItemModal/ItemModal";
 import Profile from "../Profile/Profile";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { coordinates, apiKey } from "../../utils/constants";
-import currentTemperatureUnitContext from "../../contexts/CurrentTemperatureContext";
+import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureContext";
 import { BrowserRouter } from "react-router-dom";
-import { getItems } from "../../../api.js";
-import { addItemInfo } from "../../../api.js";
-import { deleteItem } from "../../../api.js";
+import { getItems } from "../../utils/api.js";
+import { addItemInfo } from "../../utils/api.js";
+import { deleteItem } from "../../utils/api.js";
 
 function App() {
   const [clothingItems, setClothingItems] = useState([]);
@@ -27,12 +27,10 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
-  const [weatherDataLoading, setWeatherDataLoading] = useState("Loading");
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
   };
-  ``;
 
   const handleCardClick = (card) => {
     setActiveModal("preview");
@@ -49,9 +47,11 @@ function App() {
       imageUrl: inputValues.imageUrl,
       weather: inputValues.weatherType,
     };
+
     addItemInfo(newCardData)
       .then((data) => {
-        setClothingItems([data, ...clothingItems]);
+        setClothingItems((prevItems) => [data, ...prevItems]);
+        closeActiveModal();
       })
       .catch(console.error);
   };
@@ -60,7 +60,7 @@ function App() {
     setActiveModal("");
   };
 
-  const handleDeleteConf = () => {
+  const handleDeleteConformation = () => {
     setActiveModal("Delete");
   };
 
@@ -68,7 +68,7 @@ function App() {
     deleteItem(id)
       .then(() => {
         setClothingItems((prevItems) =>
-          prevItems.filter((items) => items._id !== id)
+          prevItems.filter((item) => item._id !== id)
         );
         closeActiveModal();
       })
@@ -86,14 +86,14 @@ function App() {
       });
     getItems()
       .then((data) => {
-        setClothingItems(data, clothingItems);
+        setClothingItems(data);
       })
       .catch(console.error);
   }, []);
 
   return (
     <BrowserRouter>
-      <currentTemperatureUnitContext.Provider
+      <CurrentTemperatureUnitContext.Provider
         value={{ currentTemperatureUnit, handleToggleSwitchChange }}
       >
         <div className="app">
@@ -116,6 +116,7 @@ function App() {
                   <Profile
                     onCardClick={handleCardClick}
                     clothingItems={clothingItems}
+                    onAddClick={handleAddClick}
                   />
                 }
               />
@@ -130,13 +131,13 @@ function App() {
             activeModal={activeModal}
             card={selectedCard}
             onClose={closeActiveModal}
-            deleteConf={handleDeleteConf}
+            onDeleteConfirm={handleDeleteConformation}
             onDelete={handleDeleteItem}
           />
 
           <Footer />
         </div>
-      </currentTemperatureUnitContext.Provider>
+      </CurrentTemperatureUnitContext.Provider>
     </BrowserRouter>
   );
 }

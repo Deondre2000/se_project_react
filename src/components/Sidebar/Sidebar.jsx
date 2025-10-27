@@ -9,11 +9,7 @@ export default function SideBar() {
     <aside className="sidebar">
       <div className="sidebar__user-container">
         <p className="sidebar__user-name">{username}</p>
-        <img
-          src={avatarDefault}
-          alt="Terrence Tegegen"
-          className="sidebar__avatar"
-        />
+        <img src={avatar} alt="Terrence Tegegen" className="sidebar__avatar" />
       </div>
     </aside>
   );

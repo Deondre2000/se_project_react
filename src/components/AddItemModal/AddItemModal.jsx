@@ -1,5 +1,6 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useForm } from "../../hooks/useForm";
+import { useEffect } from "react";
 
 const AddItemModal = ({ isOpened, onAddItem, onClose }) => {
   const defaultValues = {
@@ -8,12 +9,18 @@ const AddItemModal = ({ isOpened, onAddItem, onClose }) => {
     weatherType: "",
   };
 
-  const { values, handleChange } = useForm(defaultValues);
+  const { values, handleChange, setValues } = useForm(defaultValues);
 
   function handleSubmit(evt) {
     evt.preventDefault();
     onAddItem(values);
   }
+
+  useEffect(() => {
+    if (isOpened) {
+      setValues(defaultValues);
+    }
+  }, [isOpened]);
 
   return (
     <ModalWithForm
@@ -34,6 +41,7 @@ const AddItemModal = ({ isOpened, onAddItem, onClose }) => {
           placeholder="Name"
           value={values.name}
           onChange={handleChange}
+          required
         />
       </label>
       <label htmlFor="imageUrl" className="modal__label">
@@ -52,6 +60,7 @@ const AddItemModal = ({ isOpened, onAddItem, onClose }) => {
         <legend className="modal__legend">Select the Weather Type:</legend>
         <label htmlFor="hot" className="modal__label modal__label_type_radio">
           <input
+            checked={values.weatherType === "hot"}
             value="hot"
             type="radio"
             className="modal__radio-input"
@@ -62,6 +71,7 @@ const AddItemModal = ({ isOpened, onAddItem, onClose }) => {
         </label>
         <label htmlFor="warm" className="modal__label modal__label_type_radio">
           <input
+            checked={values.weatherType === "warm"}
             value="warm"
             type="radio"
             className="modal__radio-input"
@@ -72,6 +82,7 @@ const AddItemModal = ({ isOpened, onAddItem, onClose }) => {
         </label>
         <label htmlFor="cold" className="modal__label modal__label_type_radio">
           <input
+            checked={values.weatherType === "cold"}
             value="cold"
             type="radio"
             className="modal__radio-input"

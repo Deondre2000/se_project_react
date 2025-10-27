@@ -1,8 +1,7 @@
 import "./ItemModal.css";
 import close from "../../assets/close.png";
-import whtclose from "../../assets/white-close.png";
 
-function ItemModal({ activeModal, onClose, card, onDelete, deleteConf }) {
+function ItemModal({ activeModal, onClose, card, onDelete, onDeleteConfirm  }) {
   return (
     <div
       className={`modal ${
@@ -21,7 +20,7 @@ function ItemModal({ activeModal, onClose, card, onDelete, deleteConf }) {
             <h2 className="modal__caption">{card.name}</h2>
             <p className="modal__weather">Weather: {card.weather}</p>
             <button
-              onClick={() => deleteConf(card._id)}
+              onClick={() => onDeleteConfirm (card._id)}
               type="button"
               className="modal__delete"
             >

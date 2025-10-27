@@ -91,26 +91,10 @@
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/T-Shirt.png?etag=44ed1963c44ab19cd2f5011522c5fc09"
     },
     {
-      "name": "qweq",
-      "weather": "hot",
+      "name": "dqwefdqs",
+      "imageUrl": "https://music.youtube.com/img/on_platform_logo_dark.svg",
+      "weather": "warm",
       "_id": 17
-    },
-    {
-      "name": "qweq",
-      "weather": "cold",
-      "_id": 19
-    },
-    {
-      "name": "vwsv",
-      "imageUrl": "https://www.gstatic.com/youtube/media/ytm/images/pbg/liked-songs-delhi-1200.png",
-      "weather": "warm",
-      "_id": 20
-    },
-    {
-      "name": "vwsv",
-      "imageUrl": "https://www.gstatic.com/youtube/media/ytm/images/pbg/liked-songs-delhi-1200.png",
-      "weather": "warm",
-      "_id": 21
     }
   ]
 }

@@ -44,7 +44,7 @@
   right: 28px;
   color: #0000004d;
   border: none;
-  background-color: none;
+  background-color: transparent;
 }
 
 .modal__close:hover {
