@@ -1,11 +1,38 @@
 import { handleServerResponse } from "./api";
 
-export const getWeather = async ({ latitude, longitude }, APIkey) => {
+export const getWeather = async (coords = null, APIkey) => {
+  let latitude;
+  let longitude;
+
+  if (coords && coords.latitude != null && coords.longitude != null) {
+    ({ latitude, longitude } = coords);
+  } else {
+    const pos = await getCurrentPosition();
+    latitude = pos.latitude;
+    longitude = pos.longitude;
+  }
   const res = await fetch(
     `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}`
   );
   return handleServerResponse(res);
 };
+
+const getCurrentPosition = () =>
+  new Promise((resolve, reject) => {
+    if (!navigator?.geolocation) {
+      reject(new Error("Geolocation not supported by this browser."));
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (position) =>
+        resolve({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        }),
+      (err) => reject(err),
+      { enableHighAccuracy: false, timeout: 10000 }
+    );
+  });
 
 export const filterWeatherData = (data) => {
   const result = {};
@@ -32,4 +59,8 @@ const getWeatherType = (temperature) => {
   } else {
     return "cold";
   }
+};
+
+export const getWeatherCurrent = (APIkey) => {
+  return getWeather(null, APIkey);
 };

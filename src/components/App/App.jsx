@@ -7,8 +7,8 @@ import Footer from "../Footer/Footer";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import ItemModal from "../ItemModal/ItemModal";
 import Profile from "../Profile/Profile";
-import { getWeather, filterWeatherData } from "../../utils/weatherApi";
-import { coordinates, apiKey } from "../../utils/constants";
+import { getWeatherCurrent, filterWeatherData } from "../../utils/weatherApi";
+import { apiKey } from "../../utils/constants";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureContext";
 import { BrowserRouter } from "react-router-dom";
 import { getItems } from "../../utils/api.js";
@@ -76,7 +76,7 @@ function App() {
   };
 
   useEffect(() => {
-    getWeather(coordinates, apiKey)
+    getWeatherCurrent(apiKey)
       .then((data) => {
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
