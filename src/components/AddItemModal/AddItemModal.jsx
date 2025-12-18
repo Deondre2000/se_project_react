@@ -2,6 +2,20 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useForm } from "../../hooks/useForm";
 import { useEffect } from "react";
 
+const RegisterModal  = ({ isOpened, onAddItem, onClose }) => {
+  const defaultValues = {
+    name: "",
+    type: "",
+    weatherType: "",
+  };
+
+const LoginModal  = ({ isOpened, onAddItem, onClose }) => {
+  const defaultValues = {
+    name: "",
+    imageUrl: "",
+    weatherType: "",
+  };
+
 const AddItemModal = ({ isOpened, onAddItem, onClose }) => {
   const defaultValues = {
     name: "",
