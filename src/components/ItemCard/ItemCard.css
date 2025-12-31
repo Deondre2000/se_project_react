@@ -33,18 +33,29 @@
   justify-content: center;
 }
 
+.card__like {
+  position: absolute;
+  top: 12px;
+  right: 76px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+}
+
 .card__name {
   position: absolute;
   top: 15px;
   margin: 0px;
-  color: rgba(0, 0, 0, 0.6);
+  background: rgba(255, 255, 255, 1);
   font-family: Cabinet Grotesk;
   font-weight: 700;
   font-size: 16px;
   line-height: 20px;
   letter-spacing: 0px;
-  width: 49px;
   height: 20px;
+  border-radius: 4px;
 }
 
 .cards__text {

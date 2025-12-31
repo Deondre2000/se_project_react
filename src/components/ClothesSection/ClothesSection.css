@@ -22,6 +22,11 @@
   color: rgba(0, 0, 0, 0.6);
 }
 
+.clothes-add__button:hover {
+  cursor: pointer;
+  color: #000000;
+}
+
 .clothes__text {
   font-family: Cabinet Grotesk;
   font-weight: 700;

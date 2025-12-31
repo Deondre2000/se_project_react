@@ -1,3 +1,9 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  margin-right: 116px;
+}
+
 .sidebar__user-container {
   display: flex;
   flex-direction: row-reverse;
@@ -22,4 +28,34 @@
   height: 25;
   top: 135px;
   left: 112px;
+}
+
+.sidebar__edit {
+  font-family: Cabinet Grotesk;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 100%;
+  border: none;
+  background: transparent;
+  padding: 0px;
+  margin-top: 39px;
+}
+.sidebar__edit:hover {
+  cursor: pointer;
+}
+.sidebar__signout:hover {
+  cursor: pointer;
+}
+
+.sidebar__signout {
+  font-family: Cabinet Grotesk;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  border: none;
+  background: transparent;
+  padding: 0px;
+  margin-top: 8px;
 }
