@@ -44,6 +44,14 @@
   display: flex;
 }
 
+.card__like-img {
+  transition: transform 0.15s ease;
+}
+
+.card__like--active .card__like-img {
+  transform: scale(1.05);
+}
+
 .card__name {
   position: absolute;
   top: 15px;

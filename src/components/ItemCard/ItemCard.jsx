@@ -2,6 +2,7 @@ import "../ItemCard/ItemCard.css";
 import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext.jsx";
 import likeIcon from "../../assets/Like button.png";
+import likedIcon from "../../assets/liked.png";
 
 export function ItemCard({ item, onCardClick, onCardLike }) {
   const currentUser = useContext(CurrentUserContext);
@@ -9,7 +10,7 @@ export function ItemCard({ item, onCardClick, onCardLike }) {
   const isLiked = Array.isArray(item.likes)
     ? item.likes.some((id) => id === currentUser?._id)
     : false;
-  const likesCount = Array.isArray(item.likes) ? item.likes.length : 0;
+  const likeIconSrc = isLiked ? likedIcon : likeIcon;
 
   const handleCardClick = () => {
     onCardClick(item);
@@ -38,7 +39,7 @@ export function ItemCard({ item, onCardClick, onCardLike }) {
           aria-label={isLiked ? "Unlike item" : "Like item"}
         >
           <img
-            src={likeIcon}
+            src={likeIconSrc}
             alt={isLiked ? "Unlike" : "Like"}
             className="card__like-img"
           />
