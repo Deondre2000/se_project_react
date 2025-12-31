@@ -2,7 +2,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useForm } from "../../hooks/useForm";
 import { useEffect } from "react";
 
-const loginModal = ({ isOpened, onAddItem, onClose, errorText }) => {
+const LoginModal = ({ isOpened, onAddItem, onClose, errorText }) => {
   const defaultValues = {
     Email: "",
     Password: "",
@@ -60,4 +60,4 @@ const loginModal = ({ isOpened, onAddItem, onClose, errorText }) => {
   );
 };
 
-export default loginModal;
+export default LoginModal;
