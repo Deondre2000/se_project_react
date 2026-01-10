@@ -60,9 +60,9 @@ const RegisterModal = ({ isOpened, onAddItem, onClose, errorText }) => {
       <label htmlFor="Name" className="modal__label">
         Name*{" "}
         <input
-          type="Name"
+          type="text"
           className="modal__input"
-          id="Name"
+          id="register-name"
           placeholder="Name"
           name="Name"
           value={values.Name}
@@ -73,9 +73,9 @@ const RegisterModal = ({ isOpened, onAddItem, onClose, errorText }) => {
       <label htmlFor="AvatarUrl" className="modal__label">
         Avatar Url*{" "}
         <input
-          type="text"
+          type="text"      
           className="modal__input"
-          id="AvatarUrl"
+          id="register-avatar-url"
           placeholder="Avatar Url"
           name="AvatarUrl"
           value={values.AvatarUrl}

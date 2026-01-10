@@ -36,7 +36,6 @@ const LoginModal = ({ isOpened, onAddItem, onClose, errorText }) => {
         <input
           type="email"
           className="modal__input"
-          id="Email"
           name="Email"
           placeholder="Email"
           value={values.Email}
@@ -49,7 +48,6 @@ const LoginModal = ({ isOpened, onAddItem, onClose, errorText }) => {
         <input
           type="password"
           className="modal__input"
-          id="Password"
           placeholder="Password"
           name="Password"
           value={values.Password}

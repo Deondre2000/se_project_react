@@ -51,7 +51,6 @@ function EditProfileModal({ isOpened, onClose, onSubmit }) {
         <input
           type="url"
           className="modal__input"
-          id="avatar"
           name="avatar"
           placeholder="Avatar URL"
           value={values.avatar}

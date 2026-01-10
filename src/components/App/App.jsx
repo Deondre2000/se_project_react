@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header.jsx";
 import Main from "../Main/Main.jsx";
@@ -10,25 +10,38 @@ import Profile from "../Profile/Profile.jsx";
 import LoginModal from "../LoginModal/LoginModal.jsx";
 import RegisterModal from "../RegisterModal/RegisterModal.jsx";
 import EditProfileModal from "../EditProfileModal/EditProfileModal.jsx";
-import { getWeatherCurrent, filterWeatherData } from "../../utils/weatherApi.js";
+import {
+  getWeatherCurrent,
+  filterWeatherData,
+} from "../../utils/weatherApi.js";
 import { apiKey } from "../../utils/constants.js";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureContext.jsx";
 import CurrentUserContext from "../../contexts/CurrentUserContext.jsx";
-import { BrowserRouter } from "react-router-dom";
 import { getItems } from "../../utils/api.js";
 import { addItemInfo } from "../../utils/api.js";
 import { deleteItem } from "../../utils/api.js";
 import { addCardLike, removeCardLike } from "../../utils/api.js";
-import { getUserInfo, updateUserInfo } from "../../utils/auth.js";
+import {
+  getUserInfo,
+  updateUserInfo,
+  signup,
+  signin,
+} from "../../utils/auth.js";
+
+const ProtectedRoute = ({ isLoggedIn, children }) => {
+  return isLoggedIn ? children : <Navigate to="/" />;
+};
 
 function App() {
+  const navigate = useNavigate();
   const [clothingItems, setClothingItems] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [isLoadingWeather, setIsLoadingWeather] = useState(true);
 
   const [weatherData, setWeatherData] = useState({
     type: "",
-    temp: { F: 999, C: 999 },
+    temp: { F: "", C: "" },
     city: "",
     isDay: false,
   });
@@ -107,6 +120,7 @@ function App() {
     setIsLoggedIn(false);
     setCurrentUser({});
     setActiveModal("");
+    navigate("/");
   };
 
   const handleCardLike = ({ id, isLiked }) => {
@@ -137,35 +151,27 @@ function App() {
       password: formValues.Password,
     };
 
-    fetch("http://localhost:3001/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(registrationData),
-    })
-      .then((res) => res.json())
+    signup(registrationData)
       .then((res) => {
-        if (res.token) {
-          localStorage.setItem("jwt", res.token);
-          getUserInfo(res.token)
-            .then((user) => {
-              setCurrentUser(user);
-              return getItems();
-            })
-            .then((items) => {
-              setClothingItems(items);
-              setIsLoggedIn(true);
-              closeActiveModal();
-              console.log("Registration successful:", res);
-            })
-            .catch((err) => {
-              console.error("Failed to load user/items after register:", err);
-              setIsLoggedIn(true);
-              closeActiveModal();
-            });
-        } else {
-          console.error("No token received from server");
-          setAuthError("Registration failed. Please check your details.");
-        }
+        localStorage.setItem("jwt", res.token);
+        getUserInfo(res.token)
+          .then((user) => {
+            setCurrentUser(user);
+            return getItems();
+          })
+          .then((items) => {
+            setClothingItems(items);
+            setIsLoggedIn(true);
+            closeActiveModal();
+            navigate("/");
+            console.log("Registration successful:", res);
+          })
+          .catch((err) => {
+            console.error("Failed to load user/items after register:", err);
+            setIsLoggedIn(true);
+            closeActiveModal();
+            navigate("/");
+          });
       })
       .catch((error) => {
         console.error("Registration failed:", error);
@@ -180,35 +186,27 @@ function App() {
       password: formValues.Password,
     };
 
-    fetch("http://localhost:3001/signin", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(loginData),
-    })
-      .then((res) => res.json())
+    signin(loginData)
       .then((res) => {
-        if (res.token) {
-          localStorage.setItem("jwt", res.token);
-          getUserInfo(res.token)
-            .then((user) => {
-              setCurrentUser(user);
-              return getItems();
-            })
-            .then((items) => {
-              setClothingItems(items);
-              setIsLoggedIn(true);
-              closeActiveModal();
-              console.log("Login successful:", res);
-            })
-            .catch((err) => {
-              console.error("Failed to load user/items after login:", err);
-              setIsLoggedIn(true);
-              closeActiveModal();
-            });
-        } else {
-          console.error("No token received from server");
-          setAuthError("Login failed. Incorrect email or password.");
-        }
+        localStorage.setItem("jwt", res.token);
+        getUserInfo(res.token)
+          .then((user) => {
+            setCurrentUser(user);
+            return getItems();
+          })
+          .then((items) => {
+            setClothingItems(items);
+            setIsLoggedIn(true);
+            closeActiveModal();
+            navigate("/");
+            console.log("Login successful:", res);
+          })
+          .catch((err) => {
+            console.error("Failed to load user/items after login:", err);
+            setIsLoggedIn(true);
+            closeActiveModal();
+            navigate("/");
+          });
       })
       .catch((error) => {
         console.error("Login failed:", error);
@@ -251,9 +249,11 @@ function App() {
       .then((data) => {
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
+        setIsLoadingWeather(false);
       })
       .catch((error) => {
         console.error("Failed to fetch weather data:", error);
+        setIsLoadingWeather(false);
       });
     getItems()
       .then((data) => {
@@ -263,15 +263,14 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
-      <CurrentTemperatureUnitContext.Provider
-        value={{ currentTemperatureUnit, handleToggleSwitchChange }}
-      >
-        <CurrentUserContext.Provider value={currentUser}>
-          <div className="app">
+    <CurrentTemperatureUnitContext.Provider
+      value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+    >
+      <CurrentUserContext.Provider value={currentUser}>
+        <div className="app">
           <div className="page__content">
-            <Header 
-              handleAddClick={handleAddClick} 
+            <Header
+              handleAddClick={handleAddClick}
               weatherData={weatherData}
               isLoggedIn={isLoggedIn}
               onLoginClick={handleLoginClick}
@@ -286,20 +285,23 @@ function App() {
                     handleCardClick={handleCardClick}
                     clothingItems={clothingItems}
                     handleCardLike={handleCardLike}
+                    isLoadingWeather={isLoadingWeather}
                   />
                 }
               />
               <Route
                 path="/profile"
                 element={
-                  <Profile
-                    onCardClick={handleCardClick}
-                    clothingItems={clothingItems}
-                    onAddClick={handleAddClick}
-                    handleCardLike={handleCardLike}
-                    onSignOut={handleSignOut}
-                    onEditProfile={handleEditProfileClick}
-                  />
+                  <ProtectedRoute isLoggedIn={isLoggedIn}>
+                    <Profile
+                      onCardClick={handleCardClick}
+                      clothingItems={clothingItems}
+                      onAddClick={handleAddClick}
+                      handleCardLike={handleCardLike}
+                      onSignOut={handleSignOut}
+                      onEditProfile={handleEditProfileClick}
+                    />
+                  </ProtectedRoute>
                 }
               />
             </Routes>
@@ -334,10 +336,9 @@ function App() {
             onSubmit={handleUpdateProfile}
           />
           <Footer />
-          </div>
-        </CurrentUserContext.Provider>
-      </CurrentTemperatureUnitContext.Provider>
-    </BrowserRouter>
+        </div>
+      </CurrentUserContext.Provider>
+    </CurrentTemperatureUnitContext.Provider>
   );
 }
 

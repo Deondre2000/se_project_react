@@ -25,7 +25,7 @@ function ItemModal({ activeModal, onClose, card, onDelete, onDeleteConfirm  }) {
             <p className="modal__weather">Weather: {card.weather}</p>
             {isOwn && (
               <button
-                onClick={() => onDeleteConfirm (card._id)}
+                onClick={() => onDeleteConfirm(card._id)}
                 type="button"
                 className="modal__delete"
               >

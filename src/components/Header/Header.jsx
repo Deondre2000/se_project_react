@@ -28,7 +28,7 @@ function Header({ handleAddClick, weatherData, isLoggedIn, onLoginClick, onRegis
       </p>
 
       <ToggleSwitch />
-      {isProfilePage && (
+      {isProfilePage && isLoggedIn && (
         <button
           onClick={handleAddClick}
           type="button"
