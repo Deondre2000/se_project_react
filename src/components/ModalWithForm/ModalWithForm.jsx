@@ -9,6 +9,9 @@ function ModalWithForm({
   onClose,
   onSubmit,
   errorText,
+  isLoading,
+  secondButtonText,
+  onSecondButtonClick,
 }) {
   return (
     <div className={`modal ${isOpened ? "modal__opened" : ""}`}>
@@ -20,9 +23,24 @@ function ModalWithForm({
         <form onSubmit={onSubmit} action="" className="modal__form">
           {children}
           {errorText && <p className="modal__error">{errorText}</p>}
-          <button type="submit" className="modal__submit">
-            {buttonText}
-          </button>
+          <div className="modal__buttons">
+            <button
+              type="submit"
+              className="modal__submit"
+              disabled={isLoading}
+            >
+              {isLoading ? "Loading..." : buttonText}
+            </button>
+            {secondButtonText && (
+              <button
+                type="button"
+                className="modal__second-button"
+                onClick={onSecondButtonClick}
+              >
+                {secondButtonText}
+              </button>
+            )}
+          </div>
         </form>
       </div>
     </div>

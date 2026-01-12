@@ -38,6 +38,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [isLoadingWeather, setIsLoadingWeather] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [weatherData, setWeatherData] = useState({
     type: "",
@@ -86,12 +87,15 @@ function App() {
       weather: inputValues.weatherType,
     };
 
+    setIsLoading(true);
+
     addItemInfo(newCardData, token)
       .then((data) => {
-        setClothingItems((prevItems) => [data, ...prevItems]);
+        setClothingItems((prevItems) => [data.data, ...prevItems]);
         closeActiveModal();
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
   };
 
   const closeActiveModal = () => {
@@ -105,6 +109,7 @@ function App() {
 
   const handleDeleteItem = (id) => {
     const token = localStorage.getItem("jwt");
+    setIsLoading(true);
     deleteItem(id, token)
       .then(() => {
         setClothingItems((prevItems) =>
@@ -112,14 +117,18 @@ function App() {
         );
         closeActiveModal();
       })
-      .catch((error) => console.error("Failed to delete item:", error));
+      .catch((error) => {
+        console.error("Failed to delete item:", error);
+        setAuthError("Failed to delete item.");
+      })
+      .finally(() => setIsLoading(false));
   };
 
   const handleSignOut = () => {
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
     setCurrentUser({});
-    setActiveModal("");
+    closeActiveModal();
     navigate("/");
   };
 
@@ -144,6 +153,7 @@ function App() {
 
   const handleRegister = (formValues) => {
     setAuthError("");
+    setIsLoading(true);
     const registrationData = {
       name: formValues.Name,
       avatar: formValues.AvatarUrl,
@@ -171,16 +181,19 @@ function App() {
             setIsLoggedIn(true);
             closeActiveModal();
             navigate("/");
-          });
+          })
+          .finally(() => setIsLoading(false));
       })
       .catch((error) => {
         console.error("Registration failed:", error);
         setAuthError("Registration failed. Please check your details.");
+        setIsLoading(false);
       });
   };
 
   const handleLogin = (formValues) => {
     setAuthError("");
+    setIsLoading(true);
     const loginData = {
       email: formValues.Email,
       password: formValues.Password,
@@ -206,11 +219,13 @@ function App() {
             setIsLoggedIn(true);
             closeActiveModal();
             navigate("/");
-          });
+          })
+          .finally(() => setIsLoading(false));
       })
       .catch((error) => {
         console.error("Login failed:", error);
         setAuthError("Login failed. Incorrect email or password.");
+        setIsLoading(false);
       });
   };
 
@@ -221,13 +236,18 @@ function App() {
       return;
     }
 
+    setIsLoading(true);
     updateUserInfo({ name, avatar }, token)
       .then((updatedUser) => {
         const userData = updatedUser.data || updatedUser;
         setCurrentUser(userData);
         closeActiveModal();
       })
-      .catch((error) => console.error("Profile update failed:", error));
+      .catch((error) => {
+        console.error("Profile update failed:", error);
+        setAuthError("Failed to update profile.");
+      })
+      .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
@@ -310,6 +330,7 @@ function App() {
             isOpened={activeModal === "add-garment"}
             onClose={closeActiveModal}
             onAddItem={onAddItem}
+            isLoading={isLoading}
           />
           <ItemModal
             activeModal={activeModal}
@@ -317,23 +338,29 @@ function App() {
             onClose={closeActiveModal}
             onDeleteConfirm={handleDeleteConformation}
             onDelete={handleDeleteItem}
+            isLoading={isLoading}
           />
           <LoginModal
             isOpened={activeModal === "login"}
             onClose={closeActiveModal}
             onAddItem={handleLogin}
             errorText={authError}
+            isLoading={isLoading}
+            onSwitchModal={handleRegisterClick}
           />
           <RegisterModal
             isOpened={activeModal === "register"}
             onClose={closeActiveModal}
             onAddItem={handleRegister}
             errorText={authError}
+            isLoading={isLoading}
+            onSwitchModal={handleLoginClick}
           />
           <EditProfileModal
             isOpened={activeModal === "edit-profile"}
             onClose={closeActiveModal}
             onSubmit={handleUpdateProfile}
+            isLoading={isLoading}
           />
           <Footer />
         </div>

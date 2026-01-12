@@ -3,7 +3,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
 import { useForm } from "../../hooks/useForm";
 import CurrentUserContext from "../../contexts/CurrentUserContext.jsx";
 
-function EditProfileModal({ isOpened, onClose, onSubmit }) {
+function EditProfileModal({ isOpened, onClose, onSubmit, isLoading }) {
   const currentUser = useContext(CurrentUserContext);
 
   const { values, handleChange, setValues } = useForm({
@@ -32,13 +32,14 @@ function EditProfileModal({ isOpened, onClose, onSubmit }) {
       isOpened={isOpened}
       onClose={onClose}
       onSubmit={handleSubmit}
+      isLoading={isLoading}
     >
-      <label htmlFor="name" className="modal__label">
+      <label htmlFor="edit-profile-name" className="modal__label">
         Name*{" "}
         <input
           type="text"
           className="modal__input"
-          id="name"
+          id="edit-profile-name"
           name="name"
           placeholder="Name"
           value={values.name}
@@ -46,11 +47,12 @@ function EditProfileModal({ isOpened, onClose, onSubmit }) {
           required
         />
       </label>
-      <label htmlFor="avatar" className="modal__label">
+      <label htmlFor="edit-profile-avatar" className="modal__label">
         Avatar URL*{" "}
         <input
           type="url"
           className="modal__input"
+          id="edit-profile-avatar"
           name="avatar"
           placeholder="Avatar URL"
           value={values.avatar}

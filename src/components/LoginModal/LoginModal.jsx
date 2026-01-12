@@ -2,7 +2,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useForm } from "../../hooks/useForm";
 import { useEffect } from "react";
 
-const LoginModal = ({ isOpened, onAddItem, onClose, errorText }) => {
+const LoginModal = ({ isOpened, onAddItem, onClose, errorText, isLoading, onSwitchModal }) => {
   const defaultValues = {
     Email: "",
     Password: "",
@@ -29,13 +29,17 @@ const LoginModal = ({ isOpened, onAddItem, onClose, errorText }) => {
       onClose={onClose}
       onSubmit={handleSubmit}
       errorText={errorText}
+      isLoading={isLoading}
+      secondButtonText="or Sign Up"
+      onSecondButtonClick={onSwitchModal}
     >
       {" "}
-      <label htmlFor="Email" className="modal__label">
+      <label htmlFor="login-email" className="modal__label">
         Email*{" "}
         <input
           type="email"
           className="modal__input"
+          id="login-email"
           name="Email"
           placeholder="Email"
           value={values.Email}
@@ -43,11 +47,12 @@ const LoginModal = ({ isOpened, onAddItem, onClose, errorText }) => {
           required
         />
       </label>
-      <label htmlFor="Password" className="modal__label">
+      <label htmlFor="login-password" className="modal__label">
         Password*{" "}
         <input
           type="password"
           className="modal__input"
+          id="login-password"
           placeholder="Password"
           name="Password"
           value={values.Password}

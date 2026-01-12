@@ -2,7 +2,14 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useForm } from "../../hooks/useForm";
 import { useEffect } from "react";
 
-const RegisterModal = ({ isOpened, onAddItem, onClose, errorText }) => {
+const RegisterModal = ({
+  isOpened,
+  onAddItem,
+  onClose,
+  errorText,
+  isLoading,
+  onSwitchModal,
+}) => {
   const defaultValues = {
     Email: "",
     Password: "",
@@ -24,19 +31,22 @@ const RegisterModal = ({ isOpened, onAddItem, onClose, errorText }) => {
 
   return (
     <ModalWithForm
-      title="New Registration"
-      buttonText="Register"
+      title="Sign Up"
+      buttonText="Sign Up"
       isOpened={isOpened}
       onClose={onClose}
       onSubmit={handleSubmit}
       errorText={errorText}
+      isLoading={isLoading}
+      secondButtonText="or Log In"
+      onSecondButtonClick={onSwitchModal}
     >
-      <label htmlFor="Email" className="modal__label">
+      <label htmlFor="register-email" className="modal__label">
         Email*{" "}
         <input
           type="email"
           className="modal__input"
-          id="Email"
+          id="register-email"
           name="Email"
           placeholder="Email"
           value={values.Email}
@@ -44,12 +54,12 @@ const RegisterModal = ({ isOpened, onAddItem, onClose, errorText }) => {
           required
         />
       </label>
-      <label htmlFor="Password" className="modal__label">
+      <label htmlFor="register-password" className="modal__label">
         Password*{" "}
         <input
           type="password"
           className="modal__input"
-          id="Password"
+          id="register-password"
           placeholder="Password"
           name="Password"
           value={values.Password}
@@ -73,7 +83,7 @@ const RegisterModal = ({ isOpened, onAddItem, onClose, errorText }) => {
       <label htmlFor="AvatarUrl" className="modal__label">
         Avatar Url*{" "}
         <input
-          type="text"      
+          type="text"
           className="modal__input"
           id="register-avatar-url"
           placeholder="Avatar Url"

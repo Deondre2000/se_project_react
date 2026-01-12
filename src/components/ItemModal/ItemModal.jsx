@@ -3,7 +3,14 @@ import close from "../../assets/close.png";
 import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext.jsx";
 
-function ItemModal({ activeModal, onClose, card, onDelete, onDeleteConfirm  }) {
+function ItemModal({
+  activeModal,
+  onClose,
+  card,
+  onDelete,
+  onDeleteConfirm,
+  isLoading,
+}) {
   const currentUser = useContext(CurrentUserContext);
   const isOwn = card?.owner === currentUser?._id;
   return (
@@ -45,8 +52,9 @@ function ItemModal({ activeModal, onClose, card, onDelete, onDeleteConfirm  }) {
             className="modal__delete-btn"
             onClick={() => onDelete(card._id)}
             type="button"
+            disabled={isLoading}
           >
-            Yes, delete item
+            {isLoading ? "Deleting..." : "Yes, delete item"}
           </button>
           <button
             className="modal__cancel-btn"

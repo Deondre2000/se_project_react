@@ -6,7 +6,13 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext.jsx";
 
-function Header({ handleAddClick, weatherData, isLoggedIn, onLoginClick, onRegisterClick }) {
+function Header({
+  handleAddClick,
+  weatherData,
+  isLoggedIn,
+  onLoginClick,
+  onRegisterClick,
+}) {
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -28,7 +34,7 @@ function Header({ handleAddClick, weatherData, isLoggedIn, onLoginClick, onRegis
       </p>
 
       <ToggleSwitch />
-      {isProfilePage && isLoggedIn && (
+      {isLoggedIn && (
         <button
           onClick={handleAddClick}
           type="button"
@@ -58,7 +64,11 @@ function Header({ handleAddClick, weatherData, isLoggedIn, onLoginClick, onRegis
         <NavLink className="header__nav-link" to="/profile">
           <div className="header__user-container">
             <p className="header__user-name">{username}</p>
-            <img src={avatar} alt="Terrence Tegegen" className="header__avatar" />
+            <img
+              src={avatar}
+              alt="Terrence Tegegen"
+              className="header__avatar"
+            />
           </div>
         </NavLink>
       )}

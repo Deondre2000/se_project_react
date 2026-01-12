@@ -72,6 +72,12 @@
   cursor: pointer;
 }
 
+.modal__buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+}
+
 .modal__submit {
   width: 124px;
   height: 36px;
@@ -85,7 +91,6 @@
   letter-spacing: 0px;
   border-radius: 4px;
   border: none;
-  margin-top: auto;
 }
 
 .modal__submit:hover {
@@ -134,4 +139,23 @@
   font-size: 16px;
   line-height: 20px;
   letter-spacing: 0px;
+}
+
+.modal__second-button {
+  width: 124px;
+  height: 36px;
+  gap: 12px;
+  background: transparent;
+  color: #00000080;
+  font-family: Cabinet Grotesk;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0px;
+  border-radius: 4px;
+  border: none;
+}
+
+.modal__second-button:hover {
+  cursor: pointer;
 }
