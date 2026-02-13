@@ -1,5 +1,6 @@
 import { handleServerResponse } from "./api.js";
-const baseUrl = "http://localhost:3001";
+const baseUrl =
+  process.env.NODE_ENV === "production" ? "" : "http://localhost:3001";
 
 export const signup = ({ name, avatar, email, password }) => {
   return fetch(`${baseUrl}/signup`, {
