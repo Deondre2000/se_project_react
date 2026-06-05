@@ -1,7 +1,8 @@
 const baseUrl =
-  process.env.NODE_ENV === "production"
-    ? " https://api.react.pakasak.com	"
-    : "http://localhost:3001";
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.PROD
+    ? "https://api.react.pakasak.com"
+    : "http://localhost:3001");
 
 const headers = { "Content-Type": "application/json" };
 
